@@ -6,6 +6,10 @@ class SimUDuckApp{
     Duck mallard = new MallardDuck();
     mallard.performQuack();
     mallard.performFly();
+    Duck model = new ModelDuck();
+    model.performFly();
+    model.setFlyBehavior(new FlyRocketPowered());
+    model.performFly();
   }
 }
 
@@ -18,6 +22,18 @@ class MallardDuck extends Duck{
   @Override
   void display() {
     System.out.println("I am real Mallard Duck.");
+  }
+}
+
+class ModelDuck extends Duck{
+  public ModelDuck(){
+    setFlyBehavior(new FlyNoWay());
+    setQuackBehavior(new Quack());
+  }
+
+  @Override
+  void display() {
+    System.out.println("I am a model duck.");
   }
 }
 
@@ -62,6 +78,12 @@ class FlyNoWay implements FlyBehavior{
   @Override
   public void fly() {
     System.out.println("I can't fly.");
+  }
+}
+class FlyRocketPowered implements FlyBehavior{
+  @Override
+  public void fly() {
+    System.out.println("I'm flying with a rocket!");
   }
 }
 
