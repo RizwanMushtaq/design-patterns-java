@@ -1,5 +1,16 @@
 package strategyPattern;
 
+/**
+ * Implemented Duck app using Strategy Pattern.
+ * Definition of Strategy Pattern -> It defines the family of algorithms.
+ * encapsulates each one, and makes them interchangeable. Strategy lets the
+ * algorithm vary independently of clients that use it.
+ * <p>
+ * Design Principle 1 -> Identify the aspects of your application that vary
+ * and separate them from what stays the same.
+ * Design Principle 2 -> Program to an interface, not an implementation.
+ * Design Principle 3 -> Favor composition over inheritance.
+ */
 class SimUDuckApp{
   public static void main(String[] args){
     System.out.println("SimUDuckApp");
@@ -60,6 +71,15 @@ abstract class Duck {
 }
 
 /**
+ * Separating what changes from what stays the same.
+ * <p>
+ * We know that fly() and quack() are the parts of the Duck that vary across
+ * ducks.
+ * <p>
+ * To separate these behaviors from the Duck class, we'll pull both methods
+ * out of the Duck class and create a new set of classes to represent each
+ * behavior.
+ * <p>
  * Here, the Duck behaviors live in separate classes. In this way the Duck
  * class won't need to know any of the implementation details for their own
  * behaviors.
