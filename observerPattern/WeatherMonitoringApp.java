@@ -9,6 +9,7 @@ public class WeatherMonitoringApp {
     WeatherData weatherData = new WeatherData();
     CurrentConditionsDisplay currentConditionsDisplay =
         new CurrentConditionsDisplay(weatherData);
+    ForecastDisplay forecastDisplay = new ForecastDisplay(weatherData);
     weatherData.setMeasurements(80, 65, 30.4f);
     weatherData.setMeasurements(70, 60, 30.4f);
     weatherData.setMeasurements(60, 55, 30.4f);
@@ -107,6 +108,35 @@ class CurrentConditionsDisplay implements Observer, DisplayElement {
     this.temperature = weatherData.getTemperature();
     this.humidity = weatherData.getHumidity();
     this.pressure = weatherData.getPressure();
+    display();
+  }
+}
+
+class ForecastDisplay implements Observer, DisplayElement {
+  private final WeatherData weatherData;
+  private float currentPressure = 29.92f;
+  private float lastPressure;
+
+  public ForecastDisplay(WeatherData weatherData) {
+    this.weatherData = weatherData;
+    weatherData.registerObserver(this);
+  }
+
+  @Override
+  public void display() {
+    if (currentPressure > lastPressure) {
+      System.out.println("Forecast: Pressure will increase");
+    } else if (currentPressure < lastPressure) {
+      System.out.println("Forecast: Pressure will decrease");
+    } else {
+      System.out.println("Forecast: Pressure will remain same");
+    }
+  }
+
+  @Override
+  public void update() {
+    lastPressure = currentPressure;
+    currentPressure = weatherData.getPressure();
     display();
   }
 }
