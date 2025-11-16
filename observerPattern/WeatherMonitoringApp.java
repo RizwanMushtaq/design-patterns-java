@@ -28,7 +28,7 @@ interface Subject {
 }
 
 interface Observer {
-  void update(float temp, float humidity, float pressure);
+  void update();
 }
 
 interface DisplayElement {
@@ -45,6 +45,18 @@ class WeatherData implements Subject {
     observers = new ArrayList<>();
   }
 
+  public float getTemperature() {
+    return temperature;
+  }
+
+  public float getHumidity() {
+    return humidity;
+  }
+
+  public float getPressure() {
+    return pressure;
+  }
+
   @Override
   public void registerObserver(Observer observer) {
     observers.add(observer);
@@ -58,7 +70,7 @@ class WeatherData implements Subject {
   @Override
   public void notifyObservers() {
     for (Observer observer : observers) {
-      observer.update(temperature, humidity, pressure);
+      observer.update();
     }
   }
 
@@ -78,7 +90,7 @@ class CurrentConditionsDisplay implements Observer, DisplayElement {
   private float temperature;
   private float humidity;
   private float pressure;
-  private WeatherData weatherData;
+  private final WeatherData weatherData;
 
   public CurrentConditionsDisplay(WeatherData weatherData) {
     this.weatherData = weatherData;
@@ -91,10 +103,10 @@ class CurrentConditionsDisplay implements Observer, DisplayElement {
   }
 
   @Override
-  public void update(float temp, float humidity, float pressure) {
-    this.temperature = temp;
-    this.humidity = humidity;
-    this.pressure = pressure;
+  public void update() {
+    this.temperature = weatherData.getTemperature();
+    this.humidity = weatherData.getHumidity();
+    this.pressure = weatherData.getPressure();
     display();
   }
 }
